@@ -1,0 +1,166 @@
+import SwiftUI
+
+
+struct PopularFilterView: View {
+    
+    @Environment(\.presentationMode) private var presentationMode
+    
+    @EnvironmentObject var homeViewModel: HomeViewModel
+    @EnvironmentObject var filterViewModel: FilterViewModel
+    @State var isSelectedFilter : Bool = true
+    
+    @Binding var model: ToggleModel
+    
+    
+    
+    var body: some View {
+        VStack {
+            Text("Finder")
+                .font(.headline)
+                .bold()
+                .padding(.top, 10)
+            Group{
+            Divider()
+            
+            VStack(alignment: .leading) {
+                Text("Privacy")
+                    .fontWeight(.bold)
+                    .padding(.bottom, 10)
+                
+                HStack {
+                    ForEach(filterViewModel.allPrivacy, id: \.self) {priv in
+                        Button(action: {
+                            self.filterViewModel.PselectedPriv = priv
+                        })
+                        {
+                            Text(priv)
+                                .font(.footnote)
+                                .fontWeight(.semibold)
+                                .padding(8)
+                                .foregroundColor(priv == self.filterViewModel.PselectedPriv ? .white : .black)
+                                
+                        }
+                        .frame(maxWidth: .infinity)
+                        .background(priv == self.filterViewModel.PselectedPriv ? COLOR_TEAL : COLOR_FILTER_UNSELECTED)
+                        .cornerRadius(25.0)
+                        .padding(.horizontal, 5)
+                    }
+                }
+                
+                Divider()
+
+                Text("City").fontWeight(.bold)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(filterViewModel.allLocations, id: \.self) {location in
+                            Button(action: {
+                                self.filterViewModel.PselectedCity = location
+                                self.filterViewModel.updateAccomList(city: self.filterViewModel.PselectedCity)
+                            }) {
+                                Text(location)
+                                    .font(.footnote)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(location == self.filterViewModel.PselectedCity ? .white : .black)
+                                    .padding(.vertical, 8)
+                                .padding(.horizontal, 15)
+                            }
+                            .frame(minWidth: 30)
+                            .background(location == self.filterViewModel.PselectedCity ? COLOR_TEAL : COLOR_FILTER_UNSELECTED)
+                            .cornerRadius(25.0)
+                            .padding(.horizontal, 5)
+                        }
+                    }
+                }
+                
+                if (filterViewModel.testPop() == true){
+                Divider()
+                
+                
+                Text("Location").fontWeight(.bold)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(filterViewModel.PaccomList, id: \.self) {accom in
+                            Button(action: {
+                                self.filterViewModel.PselectedAccomodation = accom
+                                //add to filter settings array
+                            }) {
+                                Text(accom)
+                                    .font(.footnote)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(accom == self.filterViewModel.PselectedAccomodation ? .white : .black)
+                                    .padding(.vertical, 8)
+                                .padding(.horizontal, 15)
+                            }
+                            .frame(minWidth: 30)
+                            .background(accom == self.filterViewModel.PselectedAccomodation ? COLOR_TEAL : COLOR_FILTER_UNSELECTED)
+                            .cornerRadius(25.0)
+                            .padding(.horizontal, 5)
+                        }
+                    }
+                }
+                }
+                
+                }
+                Divider()
+                
+                Toggle("",isOn: $model.isCalendarOn).toggleStyle(ColoredToggleStyle(label: "Custom Date"))
+
+                if filterViewModel.customDate{
+                
+                CalViewController(calendarManager: CalendarManager(
+                    calendar: Calendar.current,
+                    minimumDate: Date(),
+                    maximumDate: Date().addingTimeInterval(TimeInterval((60*60*24*filterViewModel.daysInFilter))),
+                    selectedDates: filterViewModel.selectedDates,
+                    mode: 3)
+                    ).environmentObject(filterViewModel)
+                }else{
+                    Spacer()
+                }
+                
+                //make it reverse scrollable - https://www.process-one.net/blog/writing-a-custom-scroll-view-with-swiftui-in-a-chat-application/
+                
+                HStack {
+                    Button(action: clearFilter) { Text("Clear")
+                        .foregroundColor(COLOR_FILTER_CLEARBUTTON) }
+                        //.disabled(!filterSettings.isEmpty)
+                        .padding()
+                    Spacer()
+                    Button(action: applyFilter) { Text("See Results")
+                        .foregroundColor(Color.white)
+                        .fontWeight(.heavy)
+                        .padding() }
+                        .frame(maxWidth: .infinity)
+                        .background(COLOR_TEAL)
+                        .cornerRadius(15.0)
+                }.font(.headline)
+            }.padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
+        }
+    }
+    
+    
+    func clearFilter() {
+        
+        self.filterViewModel.PselectedPriv = "All"
+        self.filterViewModel.selectedDates = [Date()]
+        self.filterViewModel.PaccomList = [""]
+        self.filterViewModel.PselectedCity = filterViewModel.defaultCity
+        if self.model.isCalendarOn == true{
+            self.model.isCalendarOn = false
+        }
+
+    }
+    
+    func applyFilter() {
+        self.presentationMode.wrappedValue.dismiss()
+        print("Filter: ",filterViewModel.activatedFilter)
+        print("Privacy: ",filterViewModel.PselectedPriv)
+        print("City: ",filterViewModel.PselectedCity)
+        print("Accomodation: ",filterViewModel.PselectedAccomodation)
+        print("SelectedDates: ")
+        for date in filterViewModel.selectedDates{
+            print(date)
+        }
+    }
+}
+

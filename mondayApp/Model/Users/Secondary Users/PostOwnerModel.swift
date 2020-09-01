@@ -1,0 +1,4 @@
+class PostOwner : PostMember,anyPostOwner{
+
+    
+}

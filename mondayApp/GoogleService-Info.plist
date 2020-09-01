@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>957703276684-kk5ceek3m4nrj1gj3rsackm05kqrc2jh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.957703276684-kk5ceek3m4nrj1gj3rsackm05kqrc2jh</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBxFCcnDF9GUB96BNn9MGf95GwkCAqOSEY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>957703276684</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>methab.mondayApp</string>
+	<key>PROJECT_ID</key>
+	<string>fresher-testing</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fresher-testing.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:957703276684:ios:b133c8846b8da8dafe53a9</string>
+	<key>DATABASE_URL</key>
+	<string>https://fresher-testing.firebaseio.com</string>
+</dict>
+</plist>
