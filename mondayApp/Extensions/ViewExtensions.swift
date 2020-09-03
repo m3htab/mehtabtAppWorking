@@ -50,7 +50,7 @@ extension View{
         self.modifier(FilterSheetLayout())
     }
 }
-
+//for event extensions
 extension View{
     func noResultsText()-> some View{
         self.modifier(EventNoResultsModifier())
@@ -64,6 +64,12 @@ extension View{
     func locationTypeText()-> some View{
         self.modifier(EventLocationType())
     }
+    func titleText()-> some View{
+        self.modifier(EventTitle())
+    }
+    
+    
+    
 }
 
 extension View{

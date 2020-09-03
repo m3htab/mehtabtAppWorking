@@ -54,7 +54,7 @@ struct mainEventView: View{
                                     Text(event.GetLocationType().rawValue).locationTypeText()
                                     Text(event.GetLocationToShow()).locationToShowText()
                                     Text(event.GetDateToShow()).dateToShowText()
-                                    Text(String(event.GetCanUserAdd())).dateToShowText()
+                                    Text(event.GetTitle()).titleText()
                                 }
                                 Spacer()
                             }

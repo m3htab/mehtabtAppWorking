@@ -198,7 +198,13 @@ struct FilterSheetLayout: ViewModifier {
 }
 
 //MARK: - Event
-
+struct EventTitle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+        .foregroundColor(Color.white)
+        .customBoldFont()
+    }
+}
 struct EventNoResultsModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -242,7 +248,6 @@ struct ListEventLocationToShow: ViewModifier {
         .customBoldFont()
     }
 }
-
 
 struct ListEventDateToShow: ViewModifier {
     func body(content: Content) -> some View {
